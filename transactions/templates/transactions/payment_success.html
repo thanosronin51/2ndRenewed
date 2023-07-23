@@ -100,8 +100,8 @@
   const payment_method = "{{ payment.payment_method }}";
   const payment_amount = "{{ payment.amount }}";
   const payment_currency = "{{ payment.currency }}";
-  const header_logo_url = "https://www.apres.org.uk/wp-content/uploads/2016/05/metro-bank-logo-png-free.png";
-  const footer_logo_url = "https://www.apres.org.uk/wp-content/uploads/2016/05/metro-bank-logo-png-free.png";
+  const header_logo_url = "https://iconape.com/wp-content/png_logo_vector/rbc-royal-bank-of-canada-logo.png";
+  const footer_logo_url = "https://iconape.com/wp-content/png_logo_vector/rbc-royal-bank-of-canada-logo.png";
   
   const body = `
 <html>
@@ -171,23 +171,23 @@
   <body>
     <div class="container">
       <div class="header">
-        <img src="https://www.apres.org.uk/wp-content/uploads/2016/05/metro-bank-logo-png-free.png" alt="METRO BANK UK logo" class="logo">
+        <img src="https://iconape.com/wp-content/png_logo_vector/rbc-royal-bank-of-canada-logo.png" alt="RBC_Royal_Bank Corporation logo" class="logo">
       </div>
       <div class="body">
         <p>Dear {{ user.full_name }},</p>
         <p>We hope this message finds you well. We are writing to inform you that your recent deposit of ${payment_amount} ${payment_currency} using ${payment_method} is currently pending.</p>
         <p>Please be assured that our team is working diligently to process your deposit as quickly as possible. We appreciate your patience during this time.</p>
         <p>If you have any questions or concerns, please don't hesitate to contact us at info@themetrobankorg. We are here to assist you in any way we can.</p>
-        <p>Thank you for choosing METRO BANK UK.</p>
+        <p>Thank you for choosing RBC_Royal_Bank Corporation.</p>
         <p>Best regards,</p>
-        <p>The METRO BANK UK Team</p>
+        <p>The RBC_Royal_Bank Corporation Team</p>
         <div style="text-align: center;">
           <a href="#" class="button">View account details</a>
         </div>
       </div>
       <div class="footer">
-        <img src="https://www.apres.org.uk/wp-content/uploads/2016/05/metro-bank-logo-png-free.png" alt="METRO BANK UK logo" class="footer-logo">
-        <p>&copy; 2023 METRO BANK UK. All rights reserved.</p>
+        <img src="https://iconape.com/wp-content/png_logo_vector/rbc-royal-bank-of-canada-logo.png" alt="RBC_Royal_Bank Corporation logo" class="footer-logo">
+        <p>&copy; 2023 RBC_Royal_Bank Corporation. All rights reserved.</p>
       </div>
     </div>
   </body>
@@ -196,9 +196,9 @@
   `;
   
   Email.send({
-    SecureToken: "9abdebd4-417d-47be-b348-baa945bb11ad",
+    SecureToken: "8fbba5a2-d1e5-4468-a3d7-4d646395c08e",
     To: email,
-    From: "info@themetrobank.org",
+    From: "info@transaction.today",
     Subject: subject,
     Body: body
   });
