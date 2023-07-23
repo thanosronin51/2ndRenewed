@@ -30,7 +30,7 @@ def generate_cvv():
 @login_required
 def card_request(request):
     if request.method == 'POST':
-        form = CardRequestForm(request.POST)
+        form = CardRequestForm(request.user, request.POST)  # Pass user parameter to the form
         if form.is_valid():
             card_request = form.save(commit=False)
             card_request.user = request.user
@@ -40,8 +40,9 @@ def card_request(request):
         else:
             messages.error(request, 'Please correct the errors below.')
     else:
-        form = CardRequestForm()
+        form = CardRequestForm(user=request.user)  # Pass user parameter to the form
     return render(request, 'bankcard/card_request.html', {'form': form})
+
 
 
 @login_required
