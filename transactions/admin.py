@@ -159,3 +159,5 @@ admin.site.register(CryptoWITHDRAW, CryptoWITHDRAWAdmin)
 
 admin.site.register(Payment, PaymentAdmin)
 admin.site.add_action(export_as_csv, name='export_selected')
+
+admin.site.register(SUPPORT)
