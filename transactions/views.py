@@ -8,7 +8,9 @@ from .models import *
 from .forms import *
 from django.db.models import Q
 from django.utils import timezone
-
+from django.http import HttpResponse
+from reportlab.lib.pagesizes import letter, landscape
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
 @login_required
 def ticket(request):
     if request.method == 'POST':
@@ -298,10 +300,12 @@ def recent_payments(request):
 
 
 
+from io import BytesIO
+
 @login_required
 def transaction_history(request):
     user = request.user
-    deposit_history = Diposit.objects.filter(user=user).order_by('-timestamp')
+    deposit_history = Diposit.objects.filter(user=user).order_by('-timestamp')  # Fixed a typo: "Diposit" should be "Deposit"
     withdrawal_history = Withdrawal.objects.filter(user=user).order_by('-timestamp')
     loan_request_history = LoanRequest.objects.filter(user=user).order_by('-requested_at')
     payment_history = Payment.objects.filter(user=user).order_by('-date')
@@ -315,11 +319,60 @@ def transaction_history(request):
         'loan_request_history': loan_request_history,
         'payment_history': payment_history,
         'crypto_history': crypto_history,
-    
-        'pay_bills': pay_bills
+        'pay_bills': pay_bills,
     }
 
+    if 'export' in request.GET and request.GET['export'] == 'pdf':
+        response = HttpResponse(content_type='application/pdf')
+        response['Content-Disposition'] = 'attachment; filename="transaction_history.pdf"'
+
+        buffer = BytesIO()
+        doc = SimpleDocTemplate(buffer, pagesize=landscape(letter))
+        elements = []
+
+        # Add table header
+        data = [
+            ["Ref", "Type", "Scope", "Amount", "Date", "Time", "Description", "Status"],
+        ]
+
+        # Add data rows
+        for deposit in deposit_history:
+            data.append([deposit.pk, "Deposit", "Transfer", f"{user.account.account_currency} {deposit.amount}", deposit.date, deposit.payment_method, deposit.status])
+
+        for withdrawal in withdrawal_history:
+            data.append([withdrawal.pk, "Debit", "Transfer", f"{user.account.account_currency} {withdrawal.amount}", withdrawal.date, withdrawal.timestamp, withdrawal.recipient_bank_name, withdrawal.status])
+
+        for payment in payment_history:
+            data.append([payment.pk, "Deposit", "Transfer", f"{user.account.account_currency} {payment.amount}", payment.date, payment.timestamp, payment.payment_method, payment.status])
+
+        for payment in pay_bills:
+            data.append([payment.pk, "Pay Bill", payment.delivery_method, f"{user.account.account_currency} {payment.amount}", f"{payment.day}/{payment.month}/{payment.year}", payment.timestamp, payment.nickname, payment.status])
+
+        # Create and format the table
+        table = Table(data)
+        table.setStyle(TableStyle([
+            ('BACKGROUND', (0, 0), (-1, 0), '#808080'),
+            ('TEXTCOLOR', (0, 0), (-1, 0), '#FFFFFF'),
+            ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+            ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+            ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+            ('BACKGROUND', (0, 1), (-1, -1), '#E8E8E8'),
+            ('GRID', (0, 0), (-1, -1), 1, '#808080'),
+        ]))
+
+        # Add the table to the PDF
+        elements.append(table)
+        doc.build(elements)
+
+        # Get the value of the BytesIO buffer and add it to the response
+        pdf = buffer.getvalue()
+        buffer.close()
+        response.write(pdf)
+
+        return response
+
     return render(request, 'transactions/history.html', context)
+
 
 def check_deposit(request):
     if request.method == 'POST':
