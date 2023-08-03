@@ -1,3 +1,4 @@
+
 from django.urls import include, re_path, path
 
 from .views import *
@@ -22,6 +23,7 @@ urlpatterns = [
     re_path(r'^bill_success/$', bill_success, name='bill_success'),
     re_path(r'^terms/$', terms, name='terms'),
     re_path(r'^summary/$', transaction_history, name='history'),
+    re_path(r'^summary/export/$', transaction_history, name='history_pdf_export'),
     re_path(r'^check_deposit/$', check_deposit, name='check_deposit'),
     re_path(r'^manage_asset/$', manage_asset, name='manage_asset'),
     re_path(r'^create_withdrawal/$', create_withdrawal, name='create_withdrawal'),
