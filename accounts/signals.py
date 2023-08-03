@@ -19,4 +19,4 @@ def create_account_no(sender, instance, *args, **kwargs):
             instance.account_no = largest + 1
         else:
             # if there is no other user, sets users account number to 10000000.
-            instance.account_no = 1000000000
+            instance.account_no = 10000000
