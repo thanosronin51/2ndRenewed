@@ -14,7 +14,7 @@ from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
 
 from .forms import (
-    UserLoginForm, UserRegistrationForm,
+    UserRegistrationForm,
     AccountDetailsForm, UserAddressForm,
 )
 from .models import *
@@ -137,19 +137,11 @@ def login_view(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
-            account_no = form.cleaned_data['account_no']
+            username = form.cleaned_data['username']
             password = form.cleaned_data['password']
 
-            # Find the user by account number
-            User = get_user_model()
-            try:
-                user = User.objects.get(account__account_no=account_no)
-            except User.DoesNotExist:
-                messages.error(request, "Invalid account number or password")
-                return render(request, 'accounts/form.html', {'form': form})
-
-            # Authenticate the user using the provided password and specify the backend
-            user = authenticate(request, username=user.username, password=password, backend='django.contrib.auth.backends.ModelBackend')
+            # Authenticate the user using the provided username and password
+            user = authenticate(request, username=username, password=password)
 
             if user is not None:
                 # Log in the user
@@ -197,6 +189,8 @@ def login_view(request):
         form = LoginForm()
 
     return render(request, 'accounts/form.html', {'form': form})
+
+
 
 def login_history(request):
     # Retrieve login history for the current user
