@@ -1,3 +1,4 @@
+
 {% extends 'core/base.html' %}
 
 {% block title %} Summary   {{ block.super }}{% endblock title %}
@@ -16,9 +17,14 @@
                                     </div>
                                     <!-- .nk-block-head-content -->
                                     <div class="nk-block-head-content">
-                                        <ul class="nk-block-tools gx-3">
-                                            <li><a href="{% url 'transactions:ticket' %}" class="btn btn-secondary btn-light text-light"><span>Export Request</span><em class="icon ni ni-wallet-out"></em></a></li>
-                                        </ul>
+<ul class="nk-block-tools gx-3">
+    <li>
+        <a href="{% url 'transactions:history_pdf_export' %}?export=pdf" class="btn btn-secondary btn-light text-light">
+            <span>Export Request</span><em class="icon ni ni-wallet-out"></em>
+        </a>
+    </li>
+</ul>
+
                                     </div>
                                     <!-- .nk-block-head-content -->
                                 </div><br>
