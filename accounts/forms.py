@@ -254,30 +254,15 @@ class UserAddressForm(forms.ModelForm):
         ]
 
 
-class UserLoginForm(forms.Form):
-    username = forms.CharField(label="Username/Email")
-    password = forms.CharField(widget=forms.PasswordInput)
 
-    def clean(self, *args, **kwargs):
-        username = self.cleaned_data.get("username")
-        password = self.cleaned_data.get("password")
-
-        if username and password:
-            user = authenticate(username=username, password=password)
-            if not user:
-                raise forms.ValidationError("Invalid login credentials")
-            if not user.is_active:
-                raise forms.ValidationError("This account is inactive.")
-
-        return super(UserLoginForm, self).clean(*args, **kwargs)
 
 class LoginForm(forms.Form):
-    account_no = forms.IntegerField(
-        label='Account ID',
+    username = forms.CharField(
+        label='Username',
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control',
-                'placeholder': 'Enter your account number',
+                'placeholder': 'Enter your username',
                 'required': True,
             }
         )
@@ -295,4 +280,5 @@ class LoginForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['account_no'].widget.attrs['autocomplete'] = 'off'
+        self.fields['username'].widget.attrs['autocomplete'] = 'off'
+
