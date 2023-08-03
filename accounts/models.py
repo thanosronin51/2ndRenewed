@@ -475,7 +475,7 @@ class AccountDetails(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.pk:
-            self.account_no = random.randint(1000000000, 9999999999)
+            self.account_no = random.randint(10000000, 99999999)
         super().save(*args, **kwargs)
 
     def __str__(self):
