@@ -111,7 +111,7 @@
 <form action="{% url 'accounts:login' %}" method="POST">
   {% csrf_token %}
   <div class="form-group">
-    <label class="form-label" for="id_account_no">Account ID</label>
+    <label class="form-label" for="id_account_no">Username</label>
     {{ form.username }}
     {% if form.errors.username %}
       <div class="text-danger">{{ form.errors.username }}</div>
