@@ -63,8 +63,15 @@
                                                     <div class="card-inner">
                                                         <div class="nk-wg7">
                                                             <div class="nk-wg7-stats-group">
-                                                                <div class="nk-wg7-stats w-50" style="background-image: url(../auth/passport/); border-color: white; border-width: 5px; border-radius: 50%;"> <img class="img img-rounded" src="{{ user.account.picture.url }}" width="85" style="border-color: white; border-width: 5px; border-radius:50px;" height="85" >
-                                                                                                                       </div>
+<div class="nk-wg7-stats w-50" style="background-image: url(../auth/passport/); border-color: white; border-width: 5px; border-radius: 50%;">
+    {% if user.account.picture.url != "https://cdn1.iconfinder.com/data/icons/technology-devices-2/100/Profile-512.png" %}
+        <img class="img img-rounded" src="{{ user.account.picture.url }}" width="85" style="border-color: white; border-width: 5px; border-radius: 50px;" height="85">
+    {% else %}
+        <img class="img img-rounded" src="https://cdn1.iconfinder.com/data/icons/technology-devices-2/100/Profile-512.png" width="85" style="border-color: white; border-width: 5px; border-radius: 50px;" height="85">
+    {% endif %}
+</div>
+
+
                                                             <div class="nk-wg7-stats w-50">
                                                                 <div class="nk-wg7-title">Available balance</div>
                                                                 <div class="number-lg amount">{{ user.account.account_currency }} {{ user.balance }}</div>
