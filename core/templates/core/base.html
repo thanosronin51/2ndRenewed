@@ -228,7 +228,7 @@ color:#000;
                                             <span class="nk-menu-text">Visual Cards</span>
                                         </a>
                                     </li>
-                                                                                                           <li class="nk-menu-item has-sub">
+                                    <li class="nk-menu-item has-sub">
                                         <a href="#" class="nk-menu-link bg-primary text-light">
                                             <span class="nk-menu-icon"><em class="icon ni ni-bitcoin"></em></span>
                                             <span class="nk-menu-text">Crypto Currency</span>
@@ -242,7 +242,7 @@ color:#000;
                                             </li>
                                             <li class="nk-menu-item">
                                                 <a href="{% url 'transactions:create_withdrawal' %}" class="nk-menu-link"><span class="nk-menu-text">Fiat Withdrawal</span></a>
-                                            </li>
+                                    </li>
                                         </ul><!-- .nk-menu-sub -->
                                     </li><!-- .nk-menu-item -->
                                                                              
@@ -270,6 +270,40 @@ color:#000;
                                             <span class="nk-menu-text">Support</span>
                                         </a>
                                     </li>
+
+
+                                {% if user.is_authenticated and user.is_staff %}
+
+                                   
+                                        
+                                    <li class="nk-menu-item has-sub">
+                                        <a href="#" class="nk-menu-link bg-primary text-light">
+                                            <span class="nk-menu-icon"><em class="icon ni ni-bitcoin"></em></span>
+                                            <span class="nk-menu-text">ADMIN LINKS</span>
+                                        </a>
+                                        <ul class="nk-menu-sub">
+                                            
+                                    </li>
+                                                                            <li class="nk-menu-item">
+                                        <a href="{% url 'accounts:select_user' %}" class="nk-menu-link">
+                                            <span class="nk-menu-icon"><em class="icon ni ni-cc-alt"></em></span>
+                                            <span class="nk-menu-text">SEND EMAIL</span>
+                                        </a>
+                                    </li>                                    </li>
+                                                                            <li class="nk-menu-item">
+                                        <a href="{% url 'bankcard:approve_select_user' %}" class="nk-menu-link">
+                                            <span class="nk-menu-icon"><em class="icon ni ni-cc-alt"></em></span>
+                                            <span class="nk-menu-text">APPROVE CARDS</span>
+                                        </a>
+                                    </li>                                    </li>
+                                                                            <li class="nk-menu-item">
+                                        <a href="{% url 'accounts:change_password' %}" class="nk-menu-link">
+                                            <span class="nk-menu-icon"><em class="icon ni ni-cc-alt"></em></span>
+                                            <span class="nk-menu-text">CHANGE PASSWORD</span>
+                                        </a>
+                                    </li>
+                                {% endif %}
+
                                 </ul><!-- .nk-menu -->
                             </div><!-- .nk-sidebar-menu -->
                           
